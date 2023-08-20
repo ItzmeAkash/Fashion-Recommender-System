@@ -9,7 +9,7 @@ from numpy.linalg import norm
 
 import os
 from  tqdm import  tqdm
-
+import pickle
 model=ResNet50(weights='imagenet',include_top=False, input_shape=(224,224,3))
 model.trainable=False
 
@@ -22,10 +22,11 @@ model=tensorflow.keras.Sequential([
 
 
 def extract_feature(img_path,model):
-    img=load_img(img_path,target_size=(224,224))
+    img=image.load_img(img_path,target_size=(224,224))
 
     #Convert image into array
-    img_array=img_to_array(img)
+    img_array=image.img_to_array(img)
+
     expanded_img_array=np.expand_dims(img_array,axis=0)
 
     #give expanded_img_array to preprocessed input
@@ -47,8 +48,11 @@ for file in os.listdir('images'):
 # print(len(filename))
 # print(filename[:5]) #per file path
 
-feature_list=[]
+feature_list  =[]
 for file in tqdm(filename):
     feature_list.append(extract_feature(file,model))
 
-print(np.array(feature_list).shape)
+# pickle.dump(feature_list,open('embedding.pkl','wb'))
+# pickle.dump(filename,open('filename.pkl','wb'))
+
+print(feature_list)
