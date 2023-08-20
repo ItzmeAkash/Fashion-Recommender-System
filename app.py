@@ -51,8 +51,7 @@ for file in os.listdir('images'):
 feature_list  =[]
 for file in tqdm(filename):
     feature_list.append(extract_feature(file,model))
-
+#feature extacted
 # pickle.dump(feature_list,open('embedding.pkl','wb'))
 # pickle.dump(filename,open('filename.pkl','wb'))
 
-print(feature_list)
